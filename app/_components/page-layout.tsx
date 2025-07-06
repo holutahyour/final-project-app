@@ -15,15 +15,11 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sdcn-sidebar"
 // import { useAuth } from "@/hooks/use-auth"
-import { SIGN_IN, SIGN_UP } from "@/lib/routes"
-import { Box, Container } from "@chakra-ui/react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { useRouter } from "next/router";
-import Loading from "@/app/loading";
-import AppLoader from "./app-loader"
 import { NavUser } from "@/components/nav-user"
+import { Box } from "@chakra-ui/react"
+import { usePathname } from "next/navigation"
 import { useAzureAuth } from "../context/auth-context"
+import AppLoader from "./app-loader"
 
 interface PageLayoutProps extends React.PropsWithChildren<{}> { }
 
@@ -31,14 +27,7 @@ function PageLayout({ children }: PageLayoutProps) {
   const pathname = usePathname();
   const pathSegments = pathname.split("/").filter(segment => segment);
 
-      const { user } = useAzureAuth();
-  
-
-  // const [user] = useAuth();
-
-  // if (!user || (pathname.endsWith(SIGN_IN) || pathname.endsWith(SIGN_UP))) {
-  //   return <>{children}</>; // No layout for /admin
-  // }
+  const { user } = useAzureAuth();
 
   if (!user) return <AppLoader />;
 

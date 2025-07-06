@@ -16,7 +16,7 @@ import {
 import { sidebarData } from "@/data/sidebar-data";
 import AppLogo from "./app/app-logo";
 import { useRoleSelection } from "@/app/context/roleSelection-context";
-import { Box } from "@chakra-ui/react";
+import { Box, Separator } from "@chakra-ui/react";
 import { NavUser } from "./nav-user";
 import { useAzureAuth } from "@/app/context/auth-context";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/sdcn-dropdown-menu";
@@ -24,6 +24,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/sdcn-avatar";
 import { getInitials } from "@/lib/utils";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { LogOut, User } from "lucide-react";
+import { NavProjects } from "./sdcn-nav-projects";
+import { NavSecondary } from "./sdcn-nav-secondary";
 
 // This is sample data.
 
@@ -35,7 +37,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   const navigationItems = sidebarData(selectedRole ?? '');
 
-  // console.log("navigationItems", navigationItems,selectedRole);
   return (
     <Sidebar className="" collapsible="icon" {...props}>
       <SidebarHeader>
@@ -106,8 +107,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </DropdownMenu>
           </SidebarMenuItem>
         </SidebarMenu>
-        <NavMain items={navigationItems} disableSubMenu />
-        {/* <NavProjects projects={sidebarData.projects} /> */}
+        <NavMain items={navigationItems.navMain} disableSubMenu />
+        <Separator size="sm" />
+        <NavSecondary items={navigationItems.navSecondary} />
+        {/* <NavProjects projects={navigationItems.projects} /> */}
       </SidebarContent>
       <SidebarFooter></SidebarFooter>
       <SidebarRail />

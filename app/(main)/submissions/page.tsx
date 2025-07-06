@@ -48,18 +48,14 @@ export default function DashboardPage() {
     {!submissions ? <AppEmptyState
       heading="Nothing here yet!"
       description="Articles You submit would appear here"
-      primaryButtonText="Submit Article"
+      primaryButtonText="Submit an Article"
       onPrimaryButtonClick={handleCreateSubmission}
     /> :
       <AppDataTable
         loading={tableLoader}
         columns={submissionColumns(reloadData)}
         data={submissions}
-        titleElement={
-          <HStack align="center" alignContent='center'>
-            <Heading className="" size="lg" fontWeight='bold'>Review In Progress</Heading>
-          </HStack>
-        }
+        titleElement={<></> }
       // filter="accountName"
       // filterPlaceholder="Filter account names..."
       />}
