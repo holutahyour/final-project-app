@@ -22,24 +22,26 @@ interface IAppDrawer extends DrawerBodyProps {
     hasFooter?: boolean
     cancelQueryKey: string,
     onDiscardChange?: () => void
+    confirmCancel?: boolean
 }
 
 function AppDrawer({
-        trigger,
-        title,
-        body,
-        size = 'sm',
-        children,
-        placement,
-        rounded,
-        onSubmit,
-        open,
-        redirectUri,
-        hasFooter,
-        cancelQueryKey,
-        onDiscardChange,
-        saveButtonTitle,
-        ...rest }: IAppDrawer) {
+    trigger,
+    title,
+    body,
+    size = 'sm',
+    children,
+    placement,
+    rounded,
+    onSubmit,
+    open,
+    redirectUri,
+    hasFooter,
+    cancelQueryKey,
+    onDiscardChange,
+    saveButtonTitle,
+    confirmCancel = true,
+    ...rest }: IAppDrawer) {
 
     const { user_id } = useParams();
     const { router, searchParams, open: cancelOpen } = useQuery(cancelQueryKey, 'true')
@@ -55,6 +57,14 @@ function AppDrawer({
         router.push(pathName.split('?')[0]);
     };
 
+    const handleconfirmCancel = () => {
+        if (confirmCancel)
+            router.push(cancelDialogUrl)
+        else
+            discardChange();
+    }
+
+
     return (
         <DrawerRoot open={open} onOpenChange={handleClose} key={size} size={size} placement={placement}>
             <DrawerBackdrop />
@@ -69,7 +79,7 @@ function AppDrawer({
                     {body ?? children}
                 </DrawerBody>
                 {hasFooter && (<DrawerFooter>
-                    <Button onClick={() => router.push(cancelDialogUrl)} variant="outline">Cancel</Button>
+                    <Button onClick={handleconfirmCancel} variant="outline">Cancel</Button>
                     <AppDialog
                         title="Are you sure you want to leave the page?"
                         body="You can save your changes, discard your changes, or cancel to continue editing."

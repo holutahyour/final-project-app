@@ -1,5 +1,5 @@
-import { APP_DEFAULT_PAGE, PROFILE, SUBMISSIONS } from "@/lib/routes";
-import { Cog, Home, Notebook, User, UserRoundPen } from "lucide-react";
+import { APP_DEFAULT_PAGE, PROFILE, REVISIONS, SUBMISSIONS } from "@/lib/routes";
+import { Cog, Home, LayoutDashboard, Notebook, RefreshCcwDot, UserRoundPen } from "lucide-react";
 
 export const routes = [
   { name: "Home", path: "/" },
@@ -17,13 +17,20 @@ export const sidebarData = (role: string) => {
           {
             title: "Home",
             url: APP_DEFAULT_PAGE(),
-            icon: Home,
+            icon: LayoutDashboard,
             isActive: true,
           },
           {
             title: "Submissions",
             url: SUBMISSIONS,
             icon: Notebook,
+            items: [],
+            isActive: true,
+          },
+          {
+            title: "Revisions",
+            url: REVISIONS,
+            icon: RefreshCcwDot,
             items: [],
             isActive: true,
           },

@@ -12,7 +12,7 @@ import EditProfile from "./edit-profile/edit-profile";
 import { useAzureAuth } from "@/app/context/auth-context";
 import AppDataList from "@/components/ui/app-data-list";
 
-export default function DashboardPage() {
+export default function Page() {
   const { router, searchParams } = useQuery(APP_DRAWER, "true");
 
   const [submissions, setSubmissions] = useState<IReviewInProgress[]>([])
@@ -67,19 +67,21 @@ export default function DashboardPage() {
         <Box className="bg-white shadow-sm px-8 py-6 rounded-2xl border">
           <Stack gap='6'>
             <Heading>Personal Information</Heading>
-            <Stack gap='6' direction={{ base: "column", md: "row" }}>              
+            <Stack gap='6' direction={{ base: "column", md: "row" }}>
               <AppDataList
                 data={[
                   { label: "First Name", value: user?.givenName || "N/A" },
                   { label: "Email", value: user?.mail || "N/A" },
                 ]}
+                className="w-full"
               />
               <AppDataList
                 data={[
                   { label: "Last Name", value: user?.mobilePhone || "N/A" },
                   { label: "Phone Number", value: user?.department || "N/A" },
                 ]}
-              />              
+                className="w-full"
+              />
             </Stack>
           </Stack>
         </Box>
@@ -87,18 +89,20 @@ export default function DashboardPage() {
         <Box className="bg-white shadow-sm px-8 py-6 rounded-2xl border">
           <Stack gap='6'>
             <Heading>Academic Details</Heading>
-            <Stack gap='6' direction={{ base: "column", md: "row" }}>              
+            <Stack gap='6' direction={{ base: "column", md: "row" }}>
               <AppDataList
                 data={[
                   { label: "Matric Number", value: user?.givenName || "N/A" },
                   { label: "Department", value: user?.mail || "N/A" },
                 ]}
+                className="w-full"
               />
               <AppDataList
                 data={[
                   { label: "Faculty", value: user?.mobilePhone || "N/A" },
                   { label: "Level", value: user?.department || "N/A" },
                 ]}
+                className="w-full"
               />
             </Stack>
           </Stack>

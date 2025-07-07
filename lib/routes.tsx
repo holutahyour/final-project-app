@@ -11,8 +11,9 @@ export const APP_DEFAULT_PAGE = () => '/dashboard';
 // export const DASHBOARD = (id: string) => createRoute([id, 'dashboard']);
 
 export const SUBMISSIONS = '/submissions'
-export const PROFILE = `/profile`;
+export const REVISIONS = '/revisions'
 
+export const PROFILE = `/profile`;
 
 // export const DASHBOARD = `/dashboard`;
 

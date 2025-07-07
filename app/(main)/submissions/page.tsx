@@ -11,7 +11,7 @@ import { IReviewInProgress } from "@/data/interface/IReviewInProgress";
 import AppDataTable from "@/components/app/app-data-table";
 import { submissionColumns } from "./_components/column";
 
-export default function DashboardPage() {
+export default function Page() {
   const { router, searchParams } = useQuery(APP_DRAWER, "true");
 
   const [submissions, setSubmissions] = useState<IReviewInProgress[]>([])
@@ -45,7 +45,7 @@ export default function DashboardPage() {
   };
 
   return <Stack>
-    {!submissions ? <AppEmptyState
+    {submissions.length === 0 ? <AppEmptyState
       heading="Nothing here yet!"
       description="Articles You submit would appear here"
       primaryButtonText="Submit an Article"
