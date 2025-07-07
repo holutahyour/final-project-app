@@ -57,7 +57,7 @@ function AppDrawer({
         router.push(pathName.split('?')[0]);
     };
 
-    const handleconfirmCancel = () => {
+    const handleConfirmCancel = () => {
         if (confirmCancel)
             router.push(cancelDialogUrl)
         else
@@ -66,7 +66,7 @@ function AppDrawer({
 
 
     return (
-        <DrawerRoot open={open} onOpenChange={handleClose} key={size} size={size} placement={placement}>
+        <DrawerRoot open={open} onOpenChange={handleConfirmCancel} key={size} size={size} placement={placement}>
             <DrawerBackdrop />
             {trigger && (<DrawerTrigger asChild>
                 {trigger ?? <Button>Open</Button>}
@@ -79,7 +79,7 @@ function AppDrawer({
                     {body ?? children}
                 </DrawerBody>
                 {hasFooter && (<DrawerFooter>
-                    <Button onClick={handleconfirmCancel} variant="outline">Cancel</Button>
+                    <Button onClick={handleConfirmCancel} variant="outline">Cancel</Button>
                     <AppDialog
                         title="Are you sure you want to leave the page?"
                         body="You can save your changes, discard your changes, or cancel to continue editing."

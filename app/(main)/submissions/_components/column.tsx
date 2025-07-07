@@ -76,7 +76,6 @@ export const submissionColumns = (reloadData: () => void): ColumnDef<IReviewInPr
             Continue
           </Button>          
         </HStack>
-
       );
     },
     size: 1,
