@@ -2,9 +2,11 @@ import { Timeline } from "@chakra-ui/react"
 import { ReactNode } from "react"
 import { LuCheck } from "react-icons/lu"
 
-function AppChakraTimelines({ timelines }: { timelines: { icon: ReactNode, title: string, description: string | ReactNode, timestamp?: string, status: string }[] }) {
+function AppChakraTimelines({ timelines, size }: { 
+    timelines: { icon: ReactNode, title: string, description?: string | ReactNode, timestamp?: string, status?: string }[] 
+    size?: "sm" | "md" | "lg"}) {
     return (
-        <Timeline.Root maxW="400px">
+        <Timeline.Root maxW="400px" size={size}>
             {timelines.map(({ icon, title, description, timestamp }, index) => (
                 <Timeline.Item key={index}>
                     <Timeline.Connector>

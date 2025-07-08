@@ -13,7 +13,12 @@ export const APP_DEFAULT_PAGE = () => '/dashboard';
 export const SUBMISSIONS = '/submissions'
 export const REVIEW_DOCUMENT = '/submissions/review-document'
 export const ASSIGN_REVIEWER = '/submissions/assign-reviewer'
+export const REVIEW_MANAGEMENT = '/review-management'
 export const REVISIONS = '/revisions'
+
+export const STUDENTS = '/student'
+export const REVIEWERS = '/reviewers'
+export const BOARD_MEMBERS = '/board-members'
 
 export const PROFILE = `/profile`;
 

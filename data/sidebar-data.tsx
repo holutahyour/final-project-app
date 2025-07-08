@@ -1,5 +1,5 @@
-import { APP_DEFAULT_PAGE, PROFILE, REVISIONS, SUBMISSIONS } from "@/lib/routes";
-import { Cog, Home, LayoutDashboard, Notebook, RefreshCcwDot, UserRoundPen } from "lucide-react";
+import { APP_DEFAULT_PAGE, BOARD_MEMBERS, PROFILE, REVIEW_MANAGEMENT, REVIEWERS, REVISIONS, STUDENTS, SUBMISSIONS } from "@/lib/routes";
+import { Cog, Home, LayoutDashboard, Notebook, RefreshCcwDot, UserRoundPen, UsersRoundIcon } from "lucide-react";
 
 export const routes = [
   { name: "Home", path: "/" },
@@ -13,7 +13,7 @@ export const sidebarData = (role: string) => {
   switch (role) {
     case "Admin":
       return {
-        navMain: [
+        general: [
           {
             title: "Home",
             url: APP_DEFAULT_PAGE(),
@@ -28,6 +28,13 @@ export const sidebarData = (role: string) => {
             isActive: true,
           },
           {
+            title: "Review Management",
+            url: REVIEW_MANAGEMENT,
+            icon: UsersRoundIcon,
+            items: [],
+            isActive: true,
+          },
+          {
             title: "Revisions",
             url: REVISIONS,
             icon: RefreshCcwDot,
@@ -35,7 +42,29 @@ export const sidebarData = (role: string) => {
             isActive: true,
           },
         ],
-        navSecondary: [
+        userMangement: [
+          {
+            title: "Students",
+            url: STUDENTS,
+            icon: LayoutDashboard,
+            isActive: true,
+          },
+          {
+            title: "Reviewers",
+            url: REVIEWERS,
+            icon: Notebook,
+            items: [],
+            isActive: true,
+          },
+          {
+            title: "Board Members",
+            url: BOARD_MEMBERS,
+            icon: UsersRoundIcon,
+            items: [],
+            isActive: true,
+          },          
+        ],
+        account: [
           {
             title: "Profile",
             url: PROFILE,
@@ -50,8 +79,9 @@ export const sidebarData = (role: string) => {
       }
     default:
       return {
-        navMain: [],
-        navSecondary: [],
+        general: [],
+        userMangement: [],
+        account: [],
       };
   }
 };
