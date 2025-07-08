@@ -26,7 +26,7 @@ function ReviewDetail() {
 
     return (
         <AppDrawer
-            title={`Review Detail`}
+            title={`${!profile ? "Edit " : ""}Profile`}
             placement="end"
             size="lg"
             open={open}

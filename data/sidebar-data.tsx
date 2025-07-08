@@ -1,5 +1,5 @@
 import { APP_DEFAULT_PAGE, BOARD_MEMBERS, PROFILE, REVIEW_MANAGEMENT, REVIEWERS, REVISIONS, STUDENTS, SUBMISSIONS } from "@/lib/routes";
-import { Cog, Home, LayoutDashboard, Notebook, RefreshCcwDot, UserRoundPen, UsersRoundIcon } from "lucide-react";
+import { Cog, GraduationCap, Home, LayoutDashboard, Notebook, RefreshCcwDot, UserRoundPen, UsersRoundIcon } from "lucide-react";
 
 export const routes = [
   { name: "Home", path: "/" },
@@ -46,7 +46,7 @@ export const sidebarData = (role: string) => {
           {
             title: "Students",
             url: STUDENTS,
-            icon: LayoutDashboard,
+            icon: GraduationCap,
             isActive: true,
           },
           {

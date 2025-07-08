@@ -16,7 +16,7 @@ export const ASSIGN_REVIEWER = '/submissions/assign-reviewer'
 export const REVIEW_MANAGEMENT = '/review-management'
 export const REVISIONS = '/revisions'
 
-export const STUDENTS = '/student'
+export const STUDENTS = '/students'
 export const REVIEWERS = '/reviewers'
 export const BOARD_MEMBERS = '/board-members'
 
