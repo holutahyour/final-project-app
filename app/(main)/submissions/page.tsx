@@ -5,7 +5,7 @@ import AppEmptyState from "@/components/app/app-empty-state";
 import { IReviewInProgress } from "@/data/interface/IReviewInProgress";
 import { useModifyQuery } from "@/hooks/use-modify-query";
 import { useQuery } from "@/hooks/use-query";
-import { APP_DRAWER } from "@/lib/routes";
+import { APP_DRAWER, ASSIGN_REVIEWER } from "@/lib/routes";
 import { Button, HStack, Stack } from "@chakra-ui/react";
 import { useCallback, useLayoutEffect, useState } from "react";
 import { submissionColumns } from "./_components/column";
@@ -70,6 +70,16 @@ export default function Page() {
                 }}
               >
                 Review
+              </Button>
+              <Button
+                className="bg-primary my-1 rounded-sm font-semibold"
+                size="xs"
+                width='24'
+                onClick={() => {
+                  router.push(`${ASSIGN_REVIEWER}?id=${value.id}`);
+                }}
+              >
+                Assign Reviewer
               </Button>
             </HStack>
 

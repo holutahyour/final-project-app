@@ -43,7 +43,7 @@ function ReviewArticlePage({ submission }: { submission: IReviewInProgress | nul
 
     return (
         <Stack className="shadow-sm border-2 rounded-lg pl-4 min-h-full" direction={{ base: "column", md: "row" }} gap={6} alignItems="stretch" justifyContent="space-between">
-            <Stack className="flex flex-col min-w-96 h-full overflow-y-auto py-4">
+            <Stack className="flex flex-col min-w-64 h-full overflow-y-auto py-4">
                 <Heading size='2xl' className="font-bold mb-4">{user?.name}</Heading>
                 <Heading>{submission?.title}</Heading>
 

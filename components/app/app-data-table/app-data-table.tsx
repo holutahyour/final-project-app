@@ -94,7 +94,7 @@ export default function AppDataTable<TData, TValue>({
     })
 
     return (
-        <Card className="my-4 min-w-fit">
+        <Card className="min-w-fit">
             <CardContent className="pt-6 p-5">
                 <Stack>
                     <AppDataTableHeader
