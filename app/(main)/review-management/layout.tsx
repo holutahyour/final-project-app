@@ -2,9 +2,9 @@
 import AppPageHeader from "@/components/app/app-page-header";
 import { useModifyQuery } from "@/hooks/use-modify-query";
 import { useQuery } from "@/hooks/use-query";
-import { APP_DRAWER, SUBMISSIONS } from "@/lib/routes";
-import { Button, Stack } from "@chakra-ui/react";
-import { Notebook } from "lucide-react";
+import { APP_DRAWER } from "@/lib/routes";
+import { Stack } from "@chakra-ui/react";
+import { UsersRoundIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 interface PageLayoutProps extends React.PropsWithChildren<{}> { }
@@ -22,8 +22,7 @@ function Layout({ children }: PageLayoutProps) {
   );
   return (
     <>
-      <AppPageHeader title="Submissions" Icon={Notebook}>
-        <Button fontWeight="bold" onClick={() => router.push(createSubmissionUrl)}>Submit Article</Button>
+      <AppPageHeader title="Review Management" Icon={UsersRoundIcon}>
       </AppPageHeader>
       <Stack mx={{ base: "4", lg: "6" }} pt="2" className="h-full">
         {children}
