@@ -7,14 +7,14 @@ import { useQuery } from "@/hooks/use-query";
 import { APP_DRAWER, ASSIGN_REVIEWER } from "@/lib/routes";
 import { Button, HStack, Stack } from "@chakra-ui/react";
 import { useCallback, useLayoutEffect, useState } from "react";
-import { submissionColumns } from "./_components/column";
+import { getColumns } from "./_components/column";
 import AppCombobox from "@/components/app/app-chakra-combo-box";
 import ReviewDetail from "./profile/profile";
 
 export default function Page() {
   const { router, searchParams } = useQuery(APP_DRAWER, "true");
 
-  const [students, seStudents] = useState<{
+  const [students, setStudents] = useState<{
     id: number;
     studentName: string;
     title: string;
@@ -34,7 +34,7 @@ export default function Page() {
     setTableLoader(true);
 
     const fetched = await getStudents();
-    seStudents(fetched);
+    setStudents(fetched);
     setTableLoader(false);
 
   }, []);
@@ -56,7 +56,7 @@ export default function Page() {
     //console.log("Selected Erp Setting:", erpSetting);
   };
 
-  const modifiedColumns = submissionColumns(reloadData).map((column) => {
+  const modifiedColumns = getColumns(reloadData).map((column) => {
     if (column.id === "actions") {
       return {
         ...column,

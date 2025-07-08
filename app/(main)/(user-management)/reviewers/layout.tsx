@@ -4,7 +4,7 @@ import { useModifyQuery } from "@/hooks/use-modify-query";
 import { useQuery } from "@/hooks/use-query";
 import { APP_DRAWER } from "@/lib/routes";
 import { Stack } from "@chakra-ui/react";
-import { UsersRoundIcon } from "lucide-react";
+import { ContactRound, GraduationCap, UsersRoundIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 interface PageLayoutProps extends React.PropsWithChildren<{}> { }
@@ -22,7 +22,7 @@ function Layout({ children }: PageLayoutProps) {
   );
   return (
     <>
-      <AppPageHeader title="Review Management" Icon={UsersRoundIcon}>
+      <AppPageHeader title="Reviewers" Icon={ContactRound}>
       </AppPageHeader>
       <Stack mx={{ base: "4", lg: "6" }} pt="2" className="h-full">
         {children}

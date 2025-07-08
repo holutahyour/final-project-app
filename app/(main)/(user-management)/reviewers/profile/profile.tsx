@@ -73,28 +73,7 @@ function ReviewDetail() {
                         </Stack>
                     </Stack>
                 </Box>
-
-                <Box className="bg-white shadow-sm px-8 py-6 rounded-2xl border">
-                    <Stack gap='6'>
-                        <Heading>Academic Details</Heading>
-                        <Stack gap='6' direction={{ base: "column", md: "row" }}>
-                            <AppDataList
-                                data={[
-                                    { label: "Matric Number", value: user?.givenName || "N/A" },
-                                    { label: "Department", value: user?.mail || "N/A" },
-                                ]}
-                                className="w-full"
-                            />
-                            <AppDataList
-                                data={[
-                                    { label: "Faculty", value: user?.mobilePhone || "N/A" },
-                                    { label: "Level", value: user?.department || "N/A" },
-                                ]}
-                                className="w-full"
-                            />
-                        </Stack>
-                    </Stack>
-                </Box>
+                
             </Stack>
         </AppDrawer>
     );

@@ -7,16 +7,16 @@ import { useQuery } from "@/hooks/use-query";
 import { APP_DRAWER, ASSIGN_REVIEWER } from "@/lib/routes";
 import { Button, HStack, Stack } from "@chakra-ui/react";
 import { useCallback, useLayoutEffect, useState } from "react";
-import { submissionColumns } from "./_components/column";
+import { getColumns } from "./_components/column";
 import AppCombobox from "@/components/app/app-chakra-combo-box";
 import ReviewDetail from "./profile/profile";
 
 export default function Page() {
   const { router, searchParams } = useQuery(APP_DRAWER, "true");
 
-  const [students, seStudents] = useState<{
+  const [reviewers, setReviewers] = useState<{
     id: number;
-    studentName: string;
+    reviewerName: string;
     title: string;
     status: string;
     reviewers: {
@@ -33,8 +33,8 @@ export default function Page() {
   const reloadData = useCallback(async () => {
     setTableLoader(true);
 
-    const fetched = await getStudents();
-    seStudents(fetched);
+    const fetched = await getReviewers();
+    setReviewers(fetched);
     setTableLoader(false);
 
   }, []);
@@ -56,7 +56,7 @@ export default function Page() {
     //console.log("Selected Erp Setting:", erpSetting);
   };
 
-  const modifiedColumns = submissionColumns(reloadData).map((column) => {
+  const modifiedColumns = getColumns(reloadData).map((column) => {
     if (column.id === "actions") {
       return {
         ...column,
@@ -85,14 +85,14 @@ export default function Page() {
 
 
   return <Stack className="pb-6">
-    {students.length === 0 ? <AppEmptyState
+    {reviewers.length === 0 ? <AppEmptyState
       heading="Nothing here yet!"
       description="Submitted articles would appear here"
     /> :
       <AppDataTable
         loading={tableLoader}
         columns={modifiedColumns}
-        data={students}
+        data={reviewers}
         titleElement={
           <Stack direction={{ base: "column", md: "row" }} gap={4}>
             <AppCombobox label="Faculty" data={frameworks} size="xs" />
@@ -103,11 +103,11 @@ export default function Page() {
   </Stack>;
 }
 
-export async function getStudents() {
+export async function getReviewers() {
   return [
     {
       id: 1,
-      studentName: "Alice Johnson",
+      reviewerName: "Alice Johnson",
       title: "AI in Modern Education",
       status: "Under Review",
       reviewers: [
@@ -120,7 +120,7 @@ export async function getStudents() {
     },
     {
       id: 2,
-      studentName: "Bob Williams",
+      reviewerName: "Bob Williams",
       title: "Quantum Computing Basics",
       status: "Awaiting Review",
       reviewers: [
@@ -132,7 +132,7 @@ export async function getStudents() {
     },
     {
       id: 3,
-      studentName: "Carol Smith",
+      reviewerName: "Carol Smith",
       title: "Topology and Its Applications",
       status: "Awaiting Revision",
       reviewers: [
@@ -145,7 +145,7 @@ export async function getStudents() {
     },
     {
       id: 4,
-      studentName: "David Lee",
+      reviewerName: "David Lee",
       title: "Blockchain Security",
       status: "In Progress",
       reviewers: [
@@ -158,9 +158,9 @@ export async function getStudents() {
   ];
 }
 
-export async function getStudentById(id: string | number) {
-  const students = await getStudents();
-  return students.find((submission) => submission.id == id) || null;
+export async function getReviewerById(id: string | number) {
+  const reviewers = await getReviewers();
+  return reviewers.find((reviewer) => reviewer.id == id) || null;
 }
 
 export const frameworks = [

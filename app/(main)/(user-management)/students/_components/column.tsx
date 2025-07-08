@@ -1,11 +1,10 @@
 "use client";
 
 import { DataTableColumnHeader } from "@/components/app/app-data-table/data-table-column-header";
-import AppDataList from "@/components/ui/app-data-list";
-import { Badge, Button, HStack, Text } from "@chakra-ui/react";
+import { Button, HStack } from "@chakra-ui/react";
 import { ColumnDef } from "@tanstack/react-table";
 
-export const submissionColumns = (reloadData: () => void): ColumnDef<{
+export const getColumns = (reloadData: () => void): ColumnDef<{
   id: number;
   studentName: string;
   title: string;

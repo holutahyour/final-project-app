@@ -1,16 +1,15 @@
 "use client";
 
 import { DataTableColumnHeader } from "@/components/app/app-data-table/data-table-column-header";
-import AppDataList from "@/components/ui/app-data-list";
-import { Badge, Button, HStack, Text } from "@chakra-ui/react";
+import { Button, HStack } from "@chakra-ui/react";
 import { ColumnDef } from "@tanstack/react-table";
 
-export const submissionColumns = (reloadData: () => void): ColumnDef<{
+export const getColumns = (reloadData: () => void): ColumnDef<{
   id: number;
-  studentName: string;
+  name: string;
   title: string;
   status: string;
-  reviewers: {
+  reviewers: {  
     name: string;
     hasFeedback: boolean;
   }[];
@@ -30,9 +29,9 @@ export const submissionColumns = (reloadData: () => void): ColumnDef<{
       size: 1,
     },
     {
-      accessorKey: "studentName",
+      accessorKey: "name",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Student Name" />
+        <DataTableColumnHeader column={column} title="Name" />
       ),
     },
     {

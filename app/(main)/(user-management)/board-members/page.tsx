@@ -7,16 +7,16 @@ import { useQuery } from "@/hooks/use-query";
 import { APP_DRAWER, ASSIGN_REVIEWER } from "@/lib/routes";
 import { Button, HStack, Stack } from "@chakra-ui/react";
 import { useCallback, useLayoutEffect, useState } from "react";
-import { submissionColumns } from "./_components/column";
+import { getColumns } from "./_components/column";
 import AppCombobox from "@/components/app/app-chakra-combo-box";
-import ReviewDetail from "./review-detail/review-detail";
+import ReviewDetail from "./profile/profile";
 
 export default function Page() {
   const { router, searchParams } = useQuery(APP_DRAWER, "true");
 
-  const [submissions, setSubmissions] = useState<{
+  const [boardMembers, setBoardMembers] = useState<{
     id: number;
-    studentName: string;
+    name: string;
     title: string;
     status: string;
     reviewers: {
@@ -33,8 +33,8 @@ export default function Page() {
   const reloadData = useCallback(async () => {
     setTableLoader(true);
 
-    const fetched = await getArticleSubmissions();
-    setSubmissions(fetched);
+    const fetched = await getBoardMembers();
+    setBoardMembers(fetched);
     setTableLoader(false);
 
   }, []);
@@ -43,7 +43,7 @@ export default function Page() {
     reloadData()
   }, [reloadData]);
 
-  const reviewDetaiUrl = useModifyQuery(
+  const viewProfileUrl = useModifyQuery(
     null,
     searchParams,
     [{ key: APP_DRAWER, value: "true" }],
@@ -52,11 +52,11 @@ export default function Page() {
 
   const handleReviewDetail = () => {
     //setSelectedErpSetting(erpSetting);
-    router.push(`${reviewDetaiUrl}`);
+    router.push(`${viewProfileUrl}`);
     //console.log("Selected Erp Setting:", erpSetting);
   };
 
-  const modifiedColumns = submissionColumns(reloadData).map((column) => {
+  const modifiedColumns = getColumns(reloadData).map((column) => {
     if (column.id === "actions") {
       return {
         ...column,
@@ -70,22 +70,12 @@ export default function Page() {
                 size="xs"
                 width='24'
                 onClick={() => {
-                  router.push(`${reviewDetaiUrl}&id=${value.id}`);
+                  router.push(`${viewProfileUrl}&id=${value.id}`);
                 }}
               >
                 View Detail
               </Button>
-              <Button
-                className="bg-primary my-1 rounded-sm font-semibold"
-                size="xs"
-                onClick={() => {
-                  router.push(`${ASSIGN_REVIEWER}?id=${value.id}`);
-                }}
-              >
-                Assign Reviewer
-              </Button>
             </HStack>
-
           );
         },
       };
@@ -95,29 +85,29 @@ export default function Page() {
 
 
   return <Stack className="pb-6">
-    {submissions.length === 0 ? <AppEmptyState
+    {boardMembers.length === 0 ? <AppEmptyState
       heading="Nothing here yet!"
       description="Submitted articles would appear here"
     /> :
       <AppDataTable
         loading={tableLoader}
         columns={modifiedColumns}
-        data={submissions}
+        data={boardMembers}
         titleElement={
           <Stack direction={{ base: "column", md: "row" }} gap={4}>
+            <AppCombobox label="Faculty" data={frameworks} size="xs" />
             <AppCombobox label="Department" data={frameworks} size="xs" />
-            <AppCombobox label="Status" data={frameworks} size="xs" />
           </Stack>}
       />}
       <ReviewDetail />
   </Stack>;
 }
 
-export async function getArticleSubmissions() {
+export async function getBoardMembers() {
   return [
     {
       id: 1,
-      studentName: "Alice Johnson",
+      name: "Alice Johnson",
       title: "AI in Modern Education",
       status: "Under Review",
       reviewers: [
@@ -130,7 +120,7 @@ export async function getArticleSubmissions() {
     },
     {
       id: 2,
-      studentName: "Bob Williams",
+      name: "Bob Williams",
       title: "Quantum Computing Basics",
       status: "Awaiting Review",
       reviewers: [
@@ -142,7 +132,7 @@ export async function getArticleSubmissions() {
     },
     {
       id: 3,
-      studentName: "Carol Smith",
+      name: "Carol Smith",
       title: "Topology and Its Applications",
       status: "Awaiting Revision",
       reviewers: [
@@ -155,7 +145,7 @@ export async function getArticleSubmissions() {
     },
     {
       id: 4,
-      studentName: "David Lee",
+      name: "David Lee",
       title: "Blockchain Security",
       status: "In Progress",
       reviewers: [
@@ -168,9 +158,9 @@ export async function getArticleSubmissions() {
   ];
 }
 
-export async function getArticleSubmissionById(id: string | number) {
-  const submissions = await getArticleSubmissions();
-  return submissions.find((submission) => submission.id == id) || null;
+export async function getBoardMemberById(id: string | number) {
+  const boardMembers = await getBoardMembers();
+  return boardMembers.find((boardMember) => boardMember.id == id) || null;
 }
 
 export const frameworks = [
