@@ -140,5 +140,5 @@ export async function getArticleSubmissions() {
 
 export async function getArticleSubmissionById(id: string | number) {
   const submissions = await getArticleSubmissions();
-  return submissions.find((submission) => submission.id === id) || null;
+  return submissions.find((submission) => submission.id == id) || null;
 }

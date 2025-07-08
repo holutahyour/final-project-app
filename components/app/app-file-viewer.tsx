@@ -32,12 +32,12 @@ export default function AppFileViewer({ file }: AppFileViewerProps) {
     // Handle PDF files
     if (extension === 'pdf' && pdfUrl) {
         return (
-            <Stack className=''>
+            <Stack className='h-full'>
                 <iframe
                     src={pdfUrl}
                     width="100%"
-                    height="625px"
-                    style={{ border: "none" }}
+                    //height="630px"
+                    style={{ border: "none", height: "100%" }}
                     title="PDF Preview"
                 />
             </Stack>

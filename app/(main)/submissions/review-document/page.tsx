@@ -1,29 +1,32 @@
 "use client"
-import { Badge, Box, FileUpload, Heading, HStack, Icon, Stack, useFileUpload } from "@chakra-ui/react";
-import { FaFileUpload } from "react-icons/fa";
+import { Badge, Box, FileUpload, Heading, HStack, Icon, Stack, useFileUpload, Text, Input, Button, Group } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
+import { FaFileUpload } from "react-icons/fa";
 
 const AppFileViewer = dynamic(() => import("@/components/app/app-file-viewer"), { ssr: false });
 
-import React, { useCallback, useEffect, useState } from "react";
 import { useAzureAuth } from "@/app/context/auth-context";
-import { useQuery } from "@/hooks/use-query";
-import { getArticleSubmissionById } from "../page";
-import { APP_DRAWER } from "@/lib/routes";
-import { IReviewInProgress } from "@/data/interface/IReviewInProgress";
 import AppDataList from "@/components/ui/app-data-list";
-function ReviewDocument() {
+import React, { useState } from "react";
+import { IReviewInProgress } from "@/data/interface/IReviewInProgress";
+import AppChakraTimelines from "@/components/app/app-chakra-timeline";
+import { Field } from "@/components/ui/chakra-field";
+function ReviewArticlePage({ submission }: { submission: IReviewInProgress | null }) {
     const { user } = useAzureAuth();
-    const { searchParams, open } = useQuery(APP_DRAWER, "true");
 
-    const [submission, setSubmission] = useState<IReviewInProgress | null>();
     const fileUpload = useFileUpload({ maxFiles: 1 });
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-    const reloadData = useCallback(async () => {
-        const response = await getArticleSubmissionById(searchParams.get("id") || "")
-        setSubmission(response);
-    }, [searchParams]);
+    // Add missing state variables
+    const [timelines, setTimelines] = useState<{
+        icon: React.ReactNode;
+        title: string;
+        description: React.ReactNode;
+        timestamp?: string;
+        status: string;
+    }[]>([]);
+    const [pageInput, setPageInput] = useState<string>("");
+    const [feedbackInput, setFeedbackInput] = useState<string>("");
 
     const handleStatus = (status: string) => {
         switch (status) {
@@ -38,14 +41,10 @@ function ReviewDocument() {
         }
     }
 
-    useEffect(() => {
-        reloadData();
-    }, [reloadData, searchParams])
-
     return (
-        <Stack direction={{ base: "column", md: "row" }} gap={4} alignItems="stretch" justifyContent="space-between">
-            <Stack className="flex flex-col min-w-96 h-full overflow-y-auto">
-                <Heading>{user?.name}</Heading>
+        <Stack className="shadow-sm border-2 rounded-lg pl-4 min-h-full" direction={{ base: "column", md: "row" }} gap={6} alignItems="stretch" justifyContent="space-between">
+            <Stack className="flex flex-col min-w-96 h-full overflow-y-auto py-4">
+                <Heading size='2xl' className="font-bold mb-4">{user?.name}</Heading>
                 <Heading>{submission?.title}</Heading>
 
                 <HStack>
@@ -94,10 +93,80 @@ function ReviewDocument() {
                     <FileUpload.List showSize clearable />
                 </FileUpload.RootProvider>
             </Stack>
-            {selectedFile && <Box className="flex-1 shadow-sm border-2 rounded-sm p-3"><AppFileViewer file={selectedFile} /></Box>}
+            <Box className="flex-1">
+                {selectedFile ?
+                    <Box className="flex-1 h-[80dvh]"><AppFileViewer file={selectedFile} /></Box>
+                    :
+                    <Box className="flex-1 h-[80dvh] grid place-items-center border"><Heading size="4xl" className="font-extrabold">Document</Heading></Box>}
+                <Stack className="py-6 p-10">
+                    <form
+                        onSubmit={e => {
+                            e.preventDefault();
+                            setTimelines(prev => [
+                                ...prev,
+                                {
+                                    title: `Page ${pageInput}`,
+                                    description: feedbackInput,
+                                    status: "feedback",
+                                    icon: Number(pageInput),
+                                }
+                            ]);
+                            setPageInput("");
+                            setFeedbackInput("");
+                        }}
+                    >
+                        <HStack mb={4} gap={2}>
+                            <Field
+                                required
+                                label="Page Number"
+                                flex="1"
+                            >
+                                <Input
+                                    type="number"
+                                    min={1}
+                                    placeholder="Page number"
+                                    value={pageInput}
+                                    onChange={e => setPageInput(e.target.value)}
+                                    required
+                                />
+                            </Field>
+                            <Field
+                                required
+                                label="Feedback"
+                                flex="4"
+                            >
+                                <Group attached w="full">
+                                    <Input type="text"
+                                        placeholder="Feedback"
+                                        value={feedbackInput}
+                                        onChange={e => setFeedbackInput(e.target.value)}
+                                        required
+                                    />
+                                    <Button type="submit">
+                                        Submit
+                                    </Button>
+                                </Group>                                
+                            </Field>                            
 
+                        </HStack>
+                    </form>
+                    <AppChakraTimelines timelines={timelines.map(item => ({
+                        ...item,
+                        description: Array.isArray(item.description)
+                            ? (
+                                <Stack gap={1}>
+                                    {item.description.map((desc, idx) => (
+                                        <Text className="font-semibold" key={idx}>{desc}</Text>
+                                    ))}
+                                </Stack>
+                            )
+                            : item.description
+                    }))} />
+
+                </Stack>
+            </Box>
         </Stack>
     )
 }
 
-export default ReviewDocument
+export default ReviewArticlePage
