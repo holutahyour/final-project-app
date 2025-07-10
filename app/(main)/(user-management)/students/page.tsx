@@ -1,15 +1,15 @@
 "use client";
 
+import AppCombobox from "@/components/app/app-chakra-combo-box";
 import AppDataTable from "@/components/app/app-data-table";
 import AppEmptyState from "@/components/app/app-empty-state";
 import { useModifyQuery } from "@/hooks/use-modify-query";
 import { useQuery } from "@/hooks/use-query";
-import { APP_DRAWER, ASSIGN_REVIEWER } from "@/lib/routes";
+import { APP_DRAWER } from "@/lib/routes";
 import { Button, HStack, Stack } from "@chakra-ui/react";
 import { useCallback, useLayoutEffect, useState } from "react";
 import { getColumns } from "./_components/column";
-import AppCombobox from "@/components/app/app-chakra-combo-box";
-import ReviewDetail from "./profile/profile";
+import Profile from "./profile/profile";
 
 export default function Page() {
   const { router, searchParams } = useQuery(APP_DRAWER, "true");
@@ -99,7 +99,7 @@ export default function Page() {
             <AppCombobox label="Department" data={frameworks} size="xs" />
           </Stack>}
       />}
-      <ReviewDetail />
+      <Profile />
   </Stack>;
 }
 

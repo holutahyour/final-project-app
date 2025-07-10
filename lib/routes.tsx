@@ -15,6 +15,7 @@ export const REVIEW_DOCUMENT = '/submissions/review-document'
 export const ASSIGN_REVIEWER = '/submissions/assign-reviewer'
 export const REVIEW_MANAGEMENT = '/review-management'
 export const REVISIONS = '/revisions'
+export const DELEBERATION_ROOM = '/deliberation-room'
 
 export const STUDENTS = '/students'
 export const REVIEWERS = '/reviewers'
@@ -26,6 +27,7 @@ export const PROFILE = `/profile`;
 
 //Query Parameter
 export const APP_DRAWER = 'drawer'
+export const ARTICLE_DRAWER = 'atcl_drwl'
 export const APP_CANCEL_DIALOG = 'cancel_dialog'
 export const APP_ERP_SETTINGS_DIALOG = 'ces_dialog' 
 export const APP_IMPORT_DIALOG = 'imp_dialog' 

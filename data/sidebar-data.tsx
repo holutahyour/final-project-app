@@ -1,5 +1,5 @@
-import { APP_DEFAULT_PAGE, BOARD_MEMBERS, PROFILE, REVIEW_MANAGEMENT, REVIEWERS, REVISIONS, STUDENTS, SUBMISSIONS } from "@/lib/routes";
-import { Cog, ContactRound, GraduationCap, Handshake, Home, LayoutDashboard, Notebook, RefreshCcwDot, UserRoundPen, UsersRoundIcon } from "lucide-react";
+import { APP_DEFAULT_PAGE, BOARD_MEMBERS, DELEBERATION_ROOM, PROFILE, REVIEW_MANAGEMENT, REVIEWERS, REVISIONS, STUDENTS, SUBMISSIONS } from "@/lib/routes";
+import { Cog, ContactRound, GraduationCap, Handshake, Home, LayoutDashboard, Notebook, RefreshCcwDot, UserRoundPen, UsersRoundIcon, Video } from "lucide-react";
 
 export const routes = [
   { name: "Home", path: "/" },
@@ -28,16 +28,23 @@ export const sidebarData = (role: string) => {
             isActive: true,
           },
           {
+            title: "Revisions",
+            url: REVISIONS,
+            icon: RefreshCcwDot,
+            items: [],
+            isActive: true,
+          },  
+          {
             title: "Review Management",
             url: REVIEW_MANAGEMENT,
             icon: UsersRoundIcon,
             items: [],
             isActive: true,
-          },
+          },          
           {
-            title: "Revisions",
-            url: REVISIONS,
-            icon: RefreshCcwDot,
+            title: "Deliberation Room",
+            url: DELEBERATION_ROOM,
+            icon: Video,
             items: [],
             isActive: true,
           },

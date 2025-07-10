@@ -1,22 +1,24 @@
 "use client";
 
-import AppCombobox from "@/components/app/app-chakra-combo-box";
 import AppDataTable from "@/components/app/app-data-table";
 import AppEmptyState from "@/components/app/app-empty-state";
 import { useModifyQuery } from "@/hooks/use-modify-query";
 import { useQuery } from "@/hooks/use-query";
-import { APP_DRAWER } from "@/lib/routes";
-import { Button, HStack, Stack } from "@chakra-ui/react";
+import { APP_DRAWER, ASSIGN_REVIEWER } from "@/lib/routes";
+import { Button, HStack, Icon, Stack } from "@chakra-ui/react";
 import { useCallback, useLayoutEffect, useState } from "react";
 import { getColumns } from "./_components/column";
-import Profile from "./profile/profile";
+import AppCombobox from "@/components/app/app-chakra-combo-box";
+import ReviewDetail from "./room/room";
+import Room from "./room/room";
+import { Video } from "lucide-react";
 
 export default function Page() {
   const { router, searchParams } = useQuery(APP_DRAWER, "true");
 
-  const [reviewers, setReviewers] = useState<{
+  const [students, setStudents] = useState<{
     id: number;
-    reviewerName: string;
+    studentName: string;
     title: string;
     status: string;
     reviewers: {
@@ -33,8 +35,8 @@ export default function Page() {
   const reloadData = useCallback(async () => {
     setTableLoader(true);
 
-    const fetched = await getReviewers();
-    setReviewers(fetched);
+    const fetched = await getStudents();
+    setStudents(fetched);
     setTableLoader(false);
 
   }, []);
@@ -68,12 +70,11 @@ export default function Page() {
               <Button
                 className="bg-primary my-1 rounded-sm font-semibold"
                 size="xs"
-                width='24'
                 onClick={() => {
                   router.push(`${viewProfileUrl}&id=${value.id}`);
                 }}
               >
-                View Detail
+                <Icon><Video></Video></Icon> Join Deliberation
               </Button>
             </HStack>
           );
@@ -85,29 +86,30 @@ export default function Page() {
 
 
   return <Stack className="pb-6">
-    {reviewers.length === 0 ? <AppEmptyState
+    {students.length === 0 ? <AppEmptyState
       heading="Nothing here yet!"
       description="Submitted articles would appear here"
     /> :
       <AppDataTable
         loading={tableLoader}
         columns={modifiedColumns}
-        data={reviewers}
+        data={students}
         titleElement={
           <Stack direction={{ base: "column", md: "row" }} gap={4}>
             <AppCombobox label="Faculty" data={frameworks} size="xs" />
             <AppCombobox label="Department" data={frameworks} size="xs" />
+            <AppCombobox label="Status" data={frameworks} size="xs" />
           </Stack>}
       />}
-      <Profile />
+      <Room />
   </Stack>;
 }
 
-export async function getReviewers() {
+export async function getStudents() {
   return [
     {
       id: 1,
-      reviewerName: "Alice Johnson",
+      studentName: "Alice Johnson",
       title: "AI in Modern Education",
       status: "Under Review",
       reviewers: [
@@ -120,7 +122,7 @@ export async function getReviewers() {
     },
     {
       id: 2,
-      reviewerName: "Bob Williams",
+      studentName: "Bob Williams",
       title: "Quantum Computing Basics",
       status: "Awaiting Review",
       reviewers: [
@@ -132,7 +134,7 @@ export async function getReviewers() {
     },
     {
       id: 3,
-      reviewerName: "Carol Smith",
+      studentName: "Carol Smith",
       title: "Topology and Its Applications",
       status: "Awaiting Revision",
       reviewers: [
@@ -145,7 +147,7 @@ export async function getReviewers() {
     },
     {
       id: 4,
-      reviewerName: "David Lee",
+      studentName: "David Lee",
       title: "Blockchain Security",
       status: "In Progress",
       reviewers: [
@@ -158,9 +160,9 @@ export async function getReviewers() {
   ];
 }
 
-export async function getReviewerById(id: string | number) {
-  const reviewers = await getReviewers();
-  return reviewers.find((reviewer) => reviewer.id == id) || null;
+export async function getStudentById(id: string | number) {
+  const students = await getStudents();
+  return students.find((submission) => submission.id == id) || null;
 }
 
 export const frameworks = [

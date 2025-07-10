@@ -2,7 +2,7 @@
 import AppPageHeader from "@/components/app/app-page-header";
 import { useModifyQuery } from "@/hooks/use-modify-query";
 import { useQuery } from "@/hooks/use-query";
-import { APP_DRAWER, SUBMISSIONS } from "@/lib/routes";
+import { APP_DRAWER, ARTICLE_DRAWER, SUBMISSIONS } from "@/lib/routes";
 import { Button, Stack } from "@chakra-ui/react";
 import { Notebook } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -17,7 +17,7 @@ function Layout({ children }: PageLayoutProps) {
   const createSubmissionUrl = useModifyQuery(
     null,
     searchParams,
-    [{ key: APP_DRAWER, value: "true" }],
+    [{ key: ARTICLE_DRAWER, value: "true" }],
     "set"
   );
   return (

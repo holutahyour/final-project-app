@@ -3,8 +3,9 @@
 import { DataTableColumnHeader } from "@/components/app/app-data-table/data-table-column-header";
 import { Progress } from "@/components/ui/sdcn-progress";
 import { IReviewInProgress } from "@/data/interface/IReviewInProgress";
-import { Button, HStack, Stack, Text } from "@chakra-ui/react";
+import { Badge, Button, HStack, Icon, Stack, Text } from "@chakra-ui/react";
 import { ColumnDef } from "@tanstack/react-table";
+import { SearchSlash, ThumbsUp } from "lucide-react";
 
 export const submissionColumns = (reloadData: () => void): ColumnDef<IReviewInProgress>[] => [
   {
@@ -57,6 +58,22 @@ export const submissionColumns = (reloadData: () => void): ColumnDef<IReviewInPr
           <Text textAlign='left'>20% completed</Text>
           <Progress value={33} />
         </Stack>
+      );
+    },
+    size: 100,
+  },
+  {
+    id: "approval",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Approved" />
+    ),
+    cell: ({ row }) => {
+      const value = row.original;
+
+      return (
+        <HStack>
+          {value.approved? <Badge colorPalette='green'><Icon size='sm'><ThumbsUp /></Icon>Yes</Badge>:<Badge colorPalette='red'><Icon size='sm'><SearchSlash /></Icon>Not yet</Badge>}
+        </HStack>
       );
     },
     size: 100,

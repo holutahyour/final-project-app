@@ -1,5 +1,4 @@
 import { useAzureAuth } from "@/app/context/auth-context";
-import AppChakraTimelines from "@/components/app/app-chakra-timeline";
 import AppDrawer from "@/components/app/app-drawer";
 import AppDataList from "@/components/ui/app-data-list";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/sdcn-avatar";
@@ -9,9 +8,8 @@ import { APP_DRAWER, APP_ERP_SETTINGS_DIALOG } from "@/lib/routes";
 import { Box, Heading, HStack, Stack, Text } from "@chakra-ui/react";
 import { Camera } from "lucide-react";
 import { useState } from "react";
-import { LuCheck } from "react-icons/lu";
 
-function ReviewDetail() {
+function Profile() {
     const [profile, setProfile] = useState<null>();
     const { searchParams, open } = useQuery(APP_DRAWER, "true");
     const { user } = useAzureAuth()
@@ -101,4 +99,4 @@ function ReviewDetail() {
 
 }
 
-export default ReviewDetail
+export default Profile
