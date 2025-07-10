@@ -109,8 +109,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
         <NavMain items={navigationItems.general} disableSubMenu />
         <Separator size="sm" />
-        <NavMain items={navigationItems.userMangement} disableSubMenu />
-        <Separator size="sm" />
+        {navigationItems.userMangement.length > 0 && (<>
+          <NavMain items={navigationItems.userMangement} disableSubMenu />
+          <Separator size="sm" />
+        </>)}
         <NavSecondary items={navigationItems.account} />
         {/* <NavProjects projects={navigationItems.projects} /> */}
       </SidebarContent>

@@ -33,14 +33,14 @@ export const sidebarData = (role: string) => {
             icon: RefreshCcwDot,
             items: [],
             isActive: true,
-          },  
+          },
           {
             title: "Review Management",
             url: REVIEW_MANAGEMENT,
             icon: UsersRoundIcon,
             items: [],
             isActive: true,
-          },          
+          },
           {
             title: "Deliberation Room",
             url: DELEBERATION_ROOM,
@@ -69,8 +69,46 @@ export const sidebarData = (role: string) => {
             icon: Handshake,
             items: [],
             isActive: true,
+          },
+        ],
+        account: [
+          {
+            title: "Profile",
+            url: PROFILE,
+            icon: UserRoundPen,
+          },
+          {
+            title: "Settings",
+            url: "#",
+            icon: Cog,
+          },
+        ],
+      }
+    case "student":
+      return {
+        general: [
+          {
+            title: "Home",
+            url: APP_DEFAULT_PAGE(),
+            icon: LayoutDashboard,
+            isActive: true,
+          },
+          {
+            title: "Submissions",
+            url: SUBMISSIONS,
+            icon: Notebook,
+            items: [],
+            isActive: true,
+          },
+          {
+            title: "Revisions",
+            url: REVISIONS,
+            icon: RefreshCcwDot,
+            items: [],
+            isActive: true,
           },          
         ],
+        userMangement: [],
         account: [
           {
             title: "Profile",
