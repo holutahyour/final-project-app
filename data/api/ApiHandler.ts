@@ -1,10 +1,11 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { ICountriesResponse, IStateResponse } from "../interface/ICore";
 import {
   IAcademicDepartment,
   IAcademicDepartmentResponse,
 } from "../interface/IAcademicDepartment";
 import { toaster } from "@/components/ui/chakra-toaster";
+import { IResponse } from "../interface/IResponse";
+import { IUser } from "../interface/IUser";
 
 
 const axiosInstance = axios.create({
@@ -122,9 +123,6 @@ const requests = {
   //   axios.delete<T>(encodeURI(url)).then(responseBody),
 };
 
-const countries = {
-  list: () => requests.get<ICountriesResponse>("/countries"),
-};
 
 const academicDepartments = {
   list: () =>
@@ -143,9 +141,33 @@ const academicDepartments = {
     requests.post<any>("/academic_departments/import", academicDepartments),
 };
 
+const users = {
+  list: () =>
+    requests.get<IResponse<IUser>>(`/users`),
+  create: (user: IUser) =>
+    requests.post<IUser>(
+      "/users",
+      user
+    ),
+  update: (id: number, user: IUser) =>
+    requests.put<IUser>(
+      `/users?id=${id}`,
+      user
+    ),
+  import: (users: any) =>
+    requests.post<any>("/users/import", users),
+  admins: () =>
+    requests.get<IResponse<IUser>>(`/users/admins`),
+  boardMembers: () =>
+    requests.get<IResponse<IUser>>(`/users/board-members`),
+  reviewers: () =>
+    requests.get<IResponse<IUser>>(`/users/reviewers`),
+  students: () =>
+    requests.get<IResponse<IUser>>(`/users/students`),
+};
+
 const apiHandler = {
-  countries,
-  academicDepartments,
+  users,
 };
 
 export default apiHandler;

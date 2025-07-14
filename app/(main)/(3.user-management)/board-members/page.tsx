@@ -8,25 +8,15 @@ import { useQuery } from "@/hooks/use-query";
 import { APP_DRAWER } from "@/lib/routes";
 import { Button, HStack, Stack } from "@chakra-ui/react";
 import { useCallback, useLayoutEffect, useState } from "react";
-import { getColumns } from "./_components/column";
 import Profile from "./profile/profile";
+import apiHandler from "@/data/api/ApiHandler";
+import { IUser } from "@/data/interface/IUser";
+import { getColumns } from "./_components/column";
 
 export default function Page() {
   const { router, searchParams } = useQuery(APP_DRAWER, "true");
 
-  const [boardMembers, setBoardMembers] = useState<{
-    id: number;
-    name: string;
-    title: string;
-    status: string;
-    reviewers: {
-      name: string;
-      hasFeedback: boolean;
-    }[];
-    lastOpened: string;
-    progress: string;
-    submittedAt: Date;
-  }[]>([])
+  const [boardMembers, setBoardMembers] = useState<IUser[]>([])
   const [tableLoader, setTableLoader] = useState<boolean>(false);
 
 
@@ -34,6 +24,8 @@ export default function Page() {
     setTableLoader(true);
 
     const fetched = await getBoardMembers();
+    console.log("Fetched Board Members:", fetched);
+    
     setBoardMembers(fetched);
     setTableLoader(false);
 
@@ -73,7 +65,7 @@ export default function Page() {
                   router.push(`${viewProfileUrl}&id=${value.id}`);
                 }}
               >
-                View Detail
+                View Profile
               </Button>
             </HStack>
           );
@@ -104,59 +96,27 @@ export default function Page() {
 }
 
 export async function getBoardMembers() {
-  return [
-    {
-      id: 1,
-      name: "Alice Johnson",
-      title: "AI in Modern Education",
-      status: "Under Review",
-      reviewers: [
-        { name: "Dr. Smith", hasFeedback: true },
-        { name: "Dr. Lee", hasFeedback: false },
-      ],
-      lastOpened: "2024-06-01T12:00:00Z",
-      progress: "50%",
-      submittedAt: new Date("2024-05-01T10:00:00Z"),
-    },
-    {
-      id: 2,
-      name: "Bob Williams",
-      title: "Quantum Computing Basics",
-      status: "Awaiting Review",
-      reviewers: [
-        { name: "Prof. Adams", hasFeedback: false },
-      ],
-      lastOpened: "2024-06-02T14:30:00Z",
-      progress: "30%",
-      submittedAt: new Date("2024-05-10T09:30:00Z"),
-    },
-    {
-      id: 3,
-      name: "Carol Smith",
-      title: "Topology and Its Applications",
-      status: "Awaiting Revision",
-      reviewers: [
-        { name: "Dr. Brown", hasFeedback: true },
-        { name: "Prof. Adams", hasFeedback: true },
-      ],
-      lastOpened: "2024-06-03T16:45:00Z",
-      progress: "80%",
-      submittedAt: new Date("2024-05-15T11:15:00Z"),
-    },
-    {
-      id: 4,
-      name: "David Lee",
-      title: "Blockchain Security",
-      status: "In Progress",
-      reviewers: [
-        { name: "Dr. White", hasFeedback: false },
-      ],
-      lastOpened: "2024-06-04T09:20:00Z",
-      progress: "60%",
-      submittedAt: new Date("2024-05-20T13:00:00Z"),
-    },
-  ];
+  const Info = await apiHandler.users.boardMembers();
+  return Info?.content ?? [];
 }
+
+// export async function getBoardMembers() {
+//   return [
+//     {
+//       id: 1,
+//       name: "Alice Johnson",
+//       title: "AI in Modern Education",
+//       status: "Under Review",
+//       reviewers: [
+//         { name: "Dr. Smith", hasFeedback: true },
+//         { name: "Dr. Lee", hasFeedback: false },
+//       ],
+//       lastOpened: "2024-06-01T12:00:00Z",
+//       progress: "50%",
+//       submittedAt: new Date("2024-05-01T10:00:00Z"),
+//     },    
+//   ];
+// }
 
 export async function getBoardMemberById(id: string | number) {
   const boardMembers = await getBoardMembers();

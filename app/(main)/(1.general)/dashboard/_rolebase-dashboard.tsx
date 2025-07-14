@@ -6,9 +6,11 @@
 // import { useAuth } from "@/hooks/use-auth";
 import { useRoleSelection } from "@/app/context/roleSelection-context";
 import { useState } from "react";
-import AdminDashboard from "./adminDashboard";
-import BillingOfficerDashboard from "./billingOfficerDashboard";
-import ReceivableOfficerDashboard from "./receivableOfficerDashboard";
+import AdminDashboard from "./admin-dashboard";
+import BoardMemberDashboard from "./board-member-dashboard";
+import ReviewerDashboard from "./reviewer-dashboard";
+import StudentDashboard from "./student-dashboard";
+import SuperAdminDashboard from "./super-admin-dashboard";
 
 export default function RolebaseDashboard() {
   const { selectedRole } = useRoleSelection();
@@ -45,19 +47,23 @@ export default function RolebaseDashboard() {
 
   //   getEmbedConfig();
   // }, []);
-  
+
   if (!selectedRole) {
     return <div>Please select a role to continue.</div>;
   }
-  
+
   // Render different dashboard based on selected role
   switch (selectedRole) {
     case "Admin":
       return <AdminDashboard embedConfig={embedConfig} />;
-    case "Receivable-Accountant":
-      return <ReceivableOfficerDashboard embedConfig={embedConfig} />;
-    case "Billing-Accountant":
-      return <BillingOfficerDashboard embedConfig={embedConfig} />;
+    case "student":
+      return <StudentDashboard embedConfig={embedConfig} />;
+    case "reviewer":
+      return <ReviewerDashboard embedConfig={embedConfig} />;
+    case "board-members":
+      return <BoardMemberDashboard embedConfig={embedConfig} />;
+    case "super-admin":
+      return <SuperAdminDashboard embedConfig={embedConfig} />;
     default:
       return <div>Dashboard not available for the selected role.</div>;
   }

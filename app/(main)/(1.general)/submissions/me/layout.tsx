@@ -24,16 +24,12 @@ function Layout({ children }: PageLayoutProps) {
   );
   return (
     <>
-      {pathname === SUBMISSIONS ? (
-        <>
-          <AppPageHeader title="Submissions" Icon={Notebook}>
-            {selectedRole == "student" && (<Button fontWeight="bold" onClick={() => router.push(createSubmissionUrl)}>Submit Article</Button>)}
-          </AppPageHeader>
-          <Stack mx={{ base: "4", lg: "6" }} pt="2" className="h-full">
-            {children}
-          </Stack>
-        </>
-      ) : children}
+      <AppPageHeader title="My Submissions" Icon={Notebook}>
+        {selectedRole == "student" && (<Button fontWeight="bold" onClick={() => router.push(createSubmissionUrl)}>Submit Article</Button>)}
+      </AppPageHeader>
+      <Stack mx={{ base: "4", lg: "6" }} pt="2" className="h-full">
+        {children}
+      </Stack>
     </>
   );
 }

@@ -43,6 +43,7 @@ function ReviewArticle() {
             open={open}
             redirectUri={redirectUri}
             cancelQueryKey={APP_ERP_SETTINGS_DIALOG}
+            confirmCancel={false}
         >
             <Box className="p-2 pb-10">
                 <ReviewArticlePage submission={submission} />

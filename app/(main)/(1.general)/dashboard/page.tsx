@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 
 const RolebaseDashboard = dynamic(
-  () => import("./RolebaseDashboard"),
+  () => import("./_rolebase-dashboard"),
   { ssr: false }
 );
 

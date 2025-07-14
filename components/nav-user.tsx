@@ -206,7 +206,7 @@ export function NavUser({ user }: { user: AzureUser | null }) {
                 {availableRoles.map((role) => (
                   <DropdownMenuItem key={role} onClick={() => selectRole(role)}>
                     <User className="mr-2 h-4 w-4" />
-                    {role}
+                    <span className="capitalize">{role.replace(/-/g, " ")}</span>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuGroup>

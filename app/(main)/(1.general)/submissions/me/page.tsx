@@ -5,13 +5,12 @@ import AppDataTable from "@/components/app/app-data-table";
 import AppEmptyState from "@/components/app/app-empty-state";
 import { useModifyQuery } from "@/hooks/use-modify-query";
 import { useQuery } from "@/hooks/use-query";
-import { APP_DRAWER, ASSIGN_REVIEWER, REVISIONS } from "@/lib/routes";
+import { APP_DRAWER, REVISIONS } from "@/lib/routes";
 import { Button, HStack, Stack } from "@chakra-ui/react";
 import Link from "next/link";
 import { useCallback, useLayoutEffect, useState } from "react";
 import { submissionColumns } from "./_components/column";
-import ReviewArticle from "./review-document/review-article";
-import AppCombobox from "@/components/app/app-chakra-combo-box";
+import SubmitArticle from "./submit-article/submit-article";
 
 export default function Page() {
   const { router, searchParams } = useQuery(APP_DRAWER, "true");
@@ -59,31 +58,11 @@ export default function Page() {
               <Link href={`${REVISIONS}?id=${value.id}`}>
                 <Button
                   className="bg-primary my-1 rounded-sm font-semibold"
-                  size="xs"
+                  size="xs"                  
                 >
                   View Revisions
                 </Button>
               </Link>
-
-              {selectedRole === "reviewer" && (<Button
-                className="bg-primary my-1 rounded-sm font-semibold"
-                size="xs"
-                width='24'
-                onClick={() => {
-                  router.push(`${createSubmissionUrl}&id=${value.id}`);
-                }}
-              >
-                Review
-              </Button>)}
-              {selectedRole === "Admin" && (<Button
-                className="bg-primary my-1 rounded-sm font-semibold"
-                size="xs"
-                onClick={() => {
-                  router.push(`${ASSIGN_REVIEWER}?id=${value.id}`);
-                }}
-              >
-                Assign Reviewer
-              </Button>)}
             </HStack>
 
           );
@@ -105,19 +84,11 @@ export default function Page() {
         loading={tableLoader}
         columns={modifiedColumns}
         data={submissions}
-        titleElement={<Stack direction={{ base: "column", md: "row" }} gap={4}>
-          {selectedRole === "board-members" && (
-            <>
-              <AppCombobox label="Faculty" data={frameworks} size="xs" />
-              <AppCombobox label="Department" data={frameworks} size="xs" />
-            </>
-          )}
-          <AppCombobox label="Status" data={frameworks} size="xs" />
-        </Stack>}
+        titleElement={<></>}
       // filter="accountName"
       // filterPlaceholder="Filter account names..."
       />}
-    <ReviewArticle />
+    <SubmitArticle />
   </Stack>;
 }
 
@@ -162,17 +133,3 @@ export async function getArticleSubmissionById(id: string | number) {
   const submissions = await getArticleSubmissions();
   return submissions.find((submission) => submission.id == id) || null;
 }
-
-export const frameworks = [
-  { label: "React", value: "react" },
-  { label: "Solid", value: "solid" },
-  { label: "Vue", value: "vue" },
-  { label: "Angular", value: "angular" },
-  { label: "Svelte", value: "svelte" },
-  { label: "Preact", value: "preact" },
-  { label: "Qwik", value: "qwik" },
-  { label: "Lit", value: "lit" },
-  { label: "Alpine.js", value: "alpinejs" },
-  { label: "Ember", value: "ember" },
-  { label: "Next.js", value: "nextjs" },
-]

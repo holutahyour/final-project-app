@@ -8,25 +8,15 @@ import { useQuery } from "@/hooks/use-query";
 import { APP_DRAWER } from "@/lib/routes";
 import { Button, HStack, Stack } from "@chakra-ui/react";
 import { useCallback, useLayoutEffect, useState } from "react";
-import { getColumns } from "./_components/column";
 import Profile from "./profile/profile";
+import apiHandler from "@/data/api/ApiHandler";
+import { IUser } from "@/data/interface/IUser";
+import { getColumns } from "./_components/column";
 
 export default function Page() {
   const { router, searchParams } = useQuery(APP_DRAWER, "true");
 
-  const [reviewers, setReviewers] = useState<{
-    id: number;
-    reviewerName: string;
-    title: string;
-    status: string;
-    reviewers: {
-      name: string;
-      hasFeedback: boolean;
-    }[];
-    lastOpened: string;
-    progress: string;
-    submittedAt: Date;
-  }[]>([])
+  const [reviewers, setReviewers] = useState<IUser[]>([])
   const [tableLoader, setTableLoader] = useState<boolean>(false);
 
 
@@ -73,12 +63,13 @@ export default function Page() {
                   router.push(`${viewProfileUrl}&id=${value.id}`);
                 }}
               >
-                View Detail
+                View Profile
               </Button>
             </HStack>
           );
         },
       };
+      
     }
     return column;
   });
@@ -104,59 +95,64 @@ export default function Page() {
 }
 
 export async function getReviewers() {
-  return [
-    {
-      id: 1,
-      reviewerName: "Alice Johnson",
-      title: "AI in Modern Education",
-      status: "Under Review",
-      reviewers: [
-        { name: "Dr. Smith", hasFeedback: true },
-        { name: "Dr. Lee", hasFeedback: false },
-      ],
-      lastOpened: "2024-06-01T12:00:00Z",
-      progress: "50%",
-      submittedAt: new Date("2024-05-01T10:00:00Z"),
-    },
-    {
-      id: 2,
-      reviewerName: "Bob Williams",
-      title: "Quantum Computing Basics",
-      status: "Awaiting Review",
-      reviewers: [
-        { name: "Prof. Adams", hasFeedback: false },
-      ],
-      lastOpened: "2024-06-02T14:30:00Z",
-      progress: "30%",
-      submittedAt: new Date("2024-05-10T09:30:00Z"),
-    },
-    {
-      id: 3,
-      reviewerName: "Carol Smith",
-      title: "Topology and Its Applications",
-      status: "Awaiting Revision",
-      reviewers: [
-        { name: "Dr. Brown", hasFeedback: true },
-        { name: "Prof. Adams", hasFeedback: true },
-      ],
-      lastOpened: "2024-06-03T16:45:00Z",
-      progress: "80%",
-      submittedAt: new Date("2024-05-15T11:15:00Z"),
-    },
-    {
-      id: 4,
-      reviewerName: "David Lee",
-      title: "Blockchain Security",
-      status: "In Progress",
-      reviewers: [
-        { name: "Dr. White", hasFeedback: false },
-      ],
-      lastOpened: "2024-06-04T09:20:00Z",
-      progress: "60%",
-      submittedAt: new Date("2024-05-20T13:00:00Z"),
-    },
-  ];
+  const Info = await apiHandler.users.reviewers();
+    return Info?.content ?? [];
 }
+
+// export async function getReviewers() {
+//   return [
+//     {
+//       id: 1,
+//       reviewerName: "Alice Johnson",
+//       title: "AI in Modern Education",
+//       status: "Under Review",
+//       reviewers: [
+//         { name: "Dr. Smith", hasFeedback: true },
+//         { name: "Dr. Lee", hasFeedback: false },
+//       ],
+//       lastOpened: "2024-06-01T12:00:00Z",
+//       progress: "50%",
+//       submittedAt: new Date("2024-05-01T10:00:00Z"),
+//     },
+//     {
+//       id: 2,
+//       reviewerName: "Bob Williams",
+//       title: "Quantum Computing Basics",
+//       status: "Awaiting Review",
+//       reviewers: [
+//         { name: "Prof. Adams", hasFeedback: false },
+//       ],
+//       lastOpened: "2024-06-02T14:30:00Z",
+//       progress: "30%",
+//       submittedAt: new Date("2024-05-10T09:30:00Z"),
+//     },
+//     {
+//       id: 3,
+//       reviewerName: "Carol Smith",
+//       title: "Topology and Its Applications",
+//       status: "Awaiting Revision",
+//       reviewers: [
+//         { name: "Dr. Brown", hasFeedback: true },
+//         { name: "Prof. Adams", hasFeedback: true },
+//       ],
+//       lastOpened: "2024-06-03T16:45:00Z",
+//       progress: "80%",
+//       submittedAt: new Date("2024-05-15T11:15:00Z"),
+//     },
+//     {
+//       id: 4,
+//       reviewerName: "David Lee",
+//       title: "Blockchain Security",
+//       status: "In Progress",
+//       reviewers: [
+//         { name: "Dr. White", hasFeedback: false },
+//       ],
+//       lastOpened: "2024-06-04T09:20:00Z",
+//       progress: "60%",
+//       submittedAt: new Date("2024-05-20T13:00:00Z"),
+//     },
+//   ];
+// }
 
 export async function getReviewerById(id: string | number) {
   const reviewers = await getReviewers();

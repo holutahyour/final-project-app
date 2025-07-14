@@ -12,9 +12,7 @@ import AppChakraTimelines from "@/components/app/app-chakra-timeline";
 import AppDataTable from "@/components/app/app-data-table";
 import AppStats from "@/components/app/app-stats";
 import { Button } from "@/components/ui/sdcn-button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/sdcn-card";
-import { Input } from "@/components/ui/sdcn-input";
-import { Label } from "@/components/ui/sdcn-label";
+import { Card, CardContent, CardHeader } from "@/components/ui/sdcn-card";
 import { IReviewInProgress } from "@/data/interface/IReviewInProgress";
 import { compactNumber } from "@/lib/utils";
 import { Badge, Box, Flex, Heading, HStack, Icon, Stack, Text } from "@chakra-ui/react";
@@ -34,7 +32,7 @@ interface IPowerBi {
   };
 }
 
-function AdminDashboard({ embedConfig: { embedUrl, embedToken, reportId } }: IPowerBi) {
+function BoardMemberDashboard({ embedConfig: { embedUrl, embedToken, reportId } }: IPowerBi) {
   // const [user] = useAuth();
   const [data, setData] = useState<IReviewInProgress[]>([]);
   const [tableLoader, setTableLoader] = useState<boolean>(false);
@@ -63,66 +61,7 @@ function AdminDashboard({ embedConfig: { embedUrl, embedToken, reportId } }: IPo
   }, [reloadData]);
 
   return (
-    <Stack mx={{ base: "4", lg: "10" }} gap="6">
-      <HStack justify="space-between">
-        {/* <PageDrawer /> */}
-      </HStack>
-      <Flex w="100%" gap='10' align="stretch">
-        <Box flex="2" display="flex" flexDirection="column">
-          <Card className="w-full h-full" style={{ flex: 1 }}>
-            <CardContent className="h-full pt-6 pb-12">
-              <Stack className="h-full" justifyContent='space-between'>
-                <Heading>Submission Progress</Heading>
-                <HStack gap='5'>
-                  <AppChakraProgress size='xl' value={20} />
-                  <Stack>
-                    <Text className="text-sm font-semibold">AI in Modern Education</Text>
-                    <Badge fontWeight="semibold" colorPalette='yellow'>Under review</Badge>
-                  </Stack>
-                </HStack>
-                <HStack>
-                  <Button className="text-xs font-semibold">Submit New Document</Button>
-                  <Button className="text-xs font-semibold" variant='outline'>Upload Revised Nersion</Button>
-                </HStack>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Box>
-        <Box flex="1" display="flex" flexDirection="column">
-          <Card className="w-full max-w-sm h-full" style={{ flex: 1 }}>
-            <CardHeader>
-              <Heading>Submission Timeline</Heading>
-            </CardHeader>
-            <CardContent>
-              <AppChakraTimelines
-                timelines={[
-                  {
-                    title: "Document Submitted",
-                    description: "AI in Modern Education was submitted for review.",
-                    timestamp: "2024-05-01T10:00:00Z",
-                    status: "submitted",
-                    icon: <MdOutlineLibraryBooks />,
-                  },
-                  {
-                    title: "Under Review",
-                    description: "Assigned to Dr. Smith for initial review.",
-                    timestamp: "2024-05-05T09:00:00Z",
-                    status: "in_progress",
-                    icon: <FaUserClock />,
-                  },                  
-                  {
-                    title: "Final Review",
-                    description: "Final review in progress.",
-                    timestamp: "2024-05-25T16:00:00Z",
-                    status: "final_review",
-                    icon: <FaUserClock />,
-                  },
-                ]}
-              />
-            </CardContent>
-          </Card>
-        </Box>
-      </Flex>
+    <Stack mx={{ base: "4", lg: "10" }} gap="6">      
       <HStack flexWrap="wrap" gap="10">
         {stats.map((stat, index) => (
           <AppStats
@@ -139,7 +78,7 @@ function AdminDashboard({ embedConfig: { embedUrl, embedToken, reportId } }: IPo
         data={data}
         titleElement={
           <HStack align="center" alignContent='center'>
-            <Heading className="" size="lg" fontWeight='bold'>Review In Progress</Heading>
+            <Heading className="" size="lg" fontWeight='bold'>Recent Activities</Heading>
           </HStack>
         }
       // filter="accountName"
@@ -188,7 +127,7 @@ export async function getStudentData() {
 export async function getStats() {
   return [
     {
-      title: "Submitted Articles",
+      title: "Submissions to review",
       icon: (
         <Icon color="fg.muted" size='lg'>
           <MdOutlineLibraryBooks />
@@ -197,7 +136,7 @@ export async function getStats() {
       value: compactNumber(7),
     },
     {
-      title: "Pending Reviews",
+      title: "Scheduled Deliberations",
       icon: (
         <Icon color="fg.muted" size='lg'>
           <FaClockRotateLeft />
@@ -206,7 +145,16 @@ export async function getStats() {
       value: compactNumber(300),
     },
     {
-      title: "Pending and Closed",
+      title: "Submissions Approved",
+      icon: (
+        <Icon color="fg.muted" size='lg'>
+          <FaUserClock />
+        </Icon>
+      ),
+      value: compactNumber(10),
+    },
+    {
+      title: "Submissions Rejected",
       icon: (
         <Icon color="fg.muted" size='lg'>
           <FaUserClock />
@@ -217,4 +165,4 @@ export async function getStats() {
   ];
 }
 
-export default AdminDashboard;
+export default BoardMemberDashboard;
